@@ -1,23 +1,26 @@
-import { MOSTRAR, ADDCUPON } from '../actions-type/';
+// import { MOSTRAR, ADDCUPON } from '../actions-type/';
+import { DELETE_COUPON, ADDCUPON, LIST_COUPONS } from '../actions/coupons';
 
 const initialState = {
-  items: [],
-  cupones: [],
+  coupons: [],
 };
 function rootReducer(state = initialState, action) {
-  if (action.type === MOSTRAR) {
-    return Object.assign({}, state, {
-      ...state,
-      items: action.payload,
-    });
+  switch (action.type) {
+    case LIST_COUPONS:
+      return Object.assign({}, state, {
+        ...state,
+        coupons: action.payload,
+      });
+
+    case ADDCUPON:
+      return Object.assign({}, state, {
+        ...state,
+        coupons: action.payload,
+      });
+    case DELETE_COUPON:
+      return Object.assign({}, state, { ...state });
   }
 
-  if (action.type === ADDCUPON) {
-    return Object.assign({}, state, {
-      ...state,
-      cupones: action.payload,
-    });
-  }
   return state;
 }
 

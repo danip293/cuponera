@@ -2,11 +2,11 @@ import React from 'react';
 import { renderField } from '../componets/RenderField';
 import { Field, reduxForm } from 'redux-form';
 import { Badge, Form, FormGroup, Label } from 'reactstrap';
-import { validate, warn } from '../componets/Validaciones';
+import { validate, warn } from '../componets/Validations';
+import { ImageComponent } from '../componets/ImageComponent';
 
 class CouponFormComponent extends React.Component {
   render() {
-
     const {
       handleSubmit,
       pristine,
@@ -23,6 +23,10 @@ class CouponFormComponent extends React.Component {
     return (
       <div>
         <Form onSubmit={handleSubmit} id="form1">
+          {/*imagenes */}
+          <FormGroup>
+            <Field name="image" component={ImageComponent} />
+          </FormGroup>
           {/* nombre del cupon */}
           <FormGroup>
             <Field
@@ -92,14 +96,12 @@ class CouponFormComponent extends React.Component {
 
           {/* termnos de uso  */}
           <FormGroup>
-
             <Field
               name="terms_of_user"
               component={renderField}
               type="input"
               label="Terminos de uso"
             />
-
           </FormGroup>
 
           <hr />
@@ -121,7 +123,6 @@ class CouponFormComponent extends React.Component {
             <Field name="valid_until" component={renderField} type="date" />
           </FormGroup>
 
-
           {/* total de cupones  */}
 
           <FormGroup>
@@ -133,7 +134,6 @@ class CouponFormComponent extends React.Component {
             />
           </FormGroup>
 
-
           {/* uso del cupon por usuario */}
 
           <FormGroup>
@@ -144,7 +144,6 @@ class CouponFormComponent extends React.Component {
               label="Usos por usuario"
             />
           </FormGroup>
-
 
           {/* publicar cupon */}
 
@@ -171,9 +170,9 @@ class CouponFormComponent extends React.Component {
           {/*total de usos del cupoen el cual sera por default*/}
           <FormGroup>
             <Field
-              name="totalusage"
+              name="total_uses"
               component="input"
-              normalize={greaterThan('totalusage')}
+              normalize={greaterThan('total_uses')}
               disabled
             />
           </FormGroup>
@@ -187,7 +186,7 @@ class CouponFormComponent extends React.Component {
             Limpiar valores
           </button>
         </Form>
-      </div >
+      </div>
     );
   }
 }
@@ -196,5 +195,5 @@ export const CouponForm = reduxForm({
   form: 'contact',
   validate,
   warn,
-  initialValues: { totalusage: 0 },
+  initialValues: { total_uses: 0 },
 })(CouponFormComponent);

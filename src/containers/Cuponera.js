@@ -1,20 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getData } from '../actions/';
-import {
-  Spinner,
-  ListGroup,
-  ListGroupItem,
-  ListGroupItemText,
-} from 'reactstrap';
-class Cuponera extends Component {
-  componentDidMount() {
-    this.props.getData();
-  }
-  render() {
-    const items = this.props.items;
+import { getCouponsList, deleteCoupon } from '../actions/coupons';
+import { Spinner, Table } from 'reactstrap';
 
-    if (!items) {
+class CouponList extends Component {
+  componentDidMount() {
+    this.props.getCouponsList();
+    this.onDelete = this.onDelete.bind(this);
+  }
+
+  onDelete(id) {
+    const { deleteCoupon } = this.props;
+    deleteCoupon(id);
+  }
+
+  render() {
+    const coupons = this.props.coupons;
+
+    if (!coupons) {
       return (
         <div>
           <Spinner color="success" />
@@ -23,31 +26,52 @@ class Cuponera extends Component {
     } else {
       return (
         <div>
-          {items.map((item, index) => (
-            <ListGroup key={index}>
-              <ListGroupItem>
-                <input type="checkbox" />
-                <h3>Cupon: {item.name}</h3>
-                <ListGroupItemText>
-                  Descripcion: {item.description}
-                </ListGroupItemText>
-              </ListGroupItem>
-            </ListGroup>
-          ))}
-          {console.log(items)}
+          {console.log(coupons)}
+          <Table borderless>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Publicado</th>
+                <th>Habilitado</th>
+              </tr>
+            </thead>
+            {coupons.map((item, index) => (
+              <tbody key={index}>
+                <tr>
+                  <th scope="row">{item.name}</th>
+                  <td>{item.description}</td>
+                  <td>{item.is_published ? 'Publicado' : 'no publiado'}</td>
+                  <td>{item.is_enable ? 'Habilitado' : 'Desabilitado'}</td>
+                  <td>
+                    <button>Actualizar</button>
+                    <button onClick={() => this.onDelete(item._id['$oid'])}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            ))}
+          </Table>
         </div>
       );
     }
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
-    items: state.rootReducer.items,
+    coupons: state.rootReducer.coupons,
   };
-}
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteCoupon: id => dispatch(deleteCoupon(id)),
+    getCouponsList: () => dispatch(getCouponsList()),
+  };
+};
 
 export default connect(
   mapStateToProps,
-  { getData },
-)(Cuponera);
+  mapDispatchToProps,
+)(CouponList);

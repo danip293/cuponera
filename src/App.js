@@ -4,7 +4,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Navbar, NavbarBrand, Nav, NavItem } from 'reactstrap';
 import { CouponFormContainer } from './containers/CouponFormContainer';
-import Cuponera from './containers/Cuponera';
+import CouponList from './containers/Cuponera';
 function App() {
   return (
     <div>
@@ -21,12 +21,15 @@ function App() {
                 <Link to="/crear_cupon"> Crear Cupon </Link>
               </NavItem>
               <NavItem>
-                <Link to="/administrar_cupones">Cuponera</Link>
+                <Link to="/administrar_cupones">Lista de cupones</Link>
+              </NavItem>
+              <NavItem>
+                <Link to="/detallesCupon">Detalles del cupón</Link>
               </NavItem>
             </Nav>
           </Navbar>
           <Route path="/crear_cupon" component={CouponFormContainer} />
-          <Route path="/administrar_cupones" component={Cuponera} />
+          <Route path="/administrar_cupones" component={CouponList} />
         </div>
       </Router>
     </div>
