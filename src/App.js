@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Navbar, NavbarBrand, Nav, NavItem } from 'reactstrap';
 import { CouponFormContainer } from './containers/CouponFormContainer';
 import CouponList from './containers/Cuponera';
+import { QrReaderContainer } from './containers/QrReaderContainer';
 function App() {
   return (
     <div>
@@ -26,10 +27,14 @@ function App() {
               <NavItem>
                 <Link to="/detallesCupon">Detalles del cupón</Link>
               </NavItem>
+              <NavItem>
+                <Link to="/lectorQR">lectorQR</Link>
+              </NavItem>
             </Nav>
           </Navbar>
           <Route path="/crear_cupon" component={CouponFormContainer} />
           <Route path="/administrar_cupones" component={CouponList} />
+          <Route path="/lectorQR" component={QrReaderContainer} />
         </div>
       </Router>
     </div>
