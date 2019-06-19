@@ -24,10 +24,18 @@ function rootReducer(state = initialState, action) {
         ...state,
         coupons: action.payload,
       });
+
     case DELETE_COUPON:
-      return Object.assign({}, state, { ...state });
+      return Object.assign({}, state, {
+        ...state,
+        coupons: state.coupons.filter(
+          x => x._id.$oid !== action.payload.couponID,
+        ),
+      });
+
     case RETRIVE_COUPON:
       return Object.assign({}, state, { ...state, coupon: action.payload });
+
     case UPDATE_COUPON:
       const { couponID, json } = action.payload;
       return Object.assign({}, state, {

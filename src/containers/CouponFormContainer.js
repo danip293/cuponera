@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { formValueSelector } from 'redux-form';
-import { provideHooks } from 'redial';
 
 // Csss
 import '../App.css';

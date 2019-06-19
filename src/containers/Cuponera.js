@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCouponsList, deleteCoupon } from '../actions/coupons';
-import { Spinner, Table } from 'reactstrap';
+import { Spinner, Table, Container } from 'reactstrap';
 
 class CouponList extends Component {
   componentDidMount() {
@@ -23,57 +23,56 @@ class CouponList extends Component {
           <Spinner color="success" />
         </div>
       );
-    } else {
-      return (
-        <div>
-          {console.log(coupons)}
-          <Table hover>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th>Publicado</th>
-                <th>Habilitado</th>
-              </tr>
-            </thead>
-            {coupons.map((item, index) => (
-              <tbody key={index}>
-                <tr
-                  onClick={() => {
-                    history.push(`/detail/${item._id.$oid}`);
-                  }}
-                >
-                  <th scope="row">{item.name}</th>
-                  <td>{item.description}</td>
-                  <td>{item.is_published ? 'Publicado' : 'no publiado'}</td>
-                  <td>{item.is_enable ? 'Habilitado' : 'Desabilitado'}</td>
-                  <td>
-                    <button
-                      onClick={e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        history.push(`/update/${item._id.$oid}`);
-                      }}
-                    >
-                      Actualizar
-                    </button>
-                    <button
-                      onClick={e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        this.onDelete(item._id['$oid']);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            ))}
-          </Table>
-        </div>
-      );
     }
+    return (
+      <Container>
+        {console.log(coupons)}
+        <Table hover>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Publicado</th>
+              <th>Habilitado</th>
+            </tr>
+          </thead>
+          {coupons.map((item, index) => (
+            <tbody key={index}>
+              <tr
+                onClick={() => {
+                  history.push(`/detail/${item._id.$oid}`);
+                }}
+              >
+                <th scope="row">{item.name}</th>
+                <td>{item.description}</td>
+                <td>{item.is_published ? 'Publicado' : 'no publiado'}</td>
+                <td>{item.is_enable ? 'Habilitado' : 'Desabilitado'}</td>
+                <td>
+                  <button
+                    onClick={e => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      history.push(`/update/${item._id.$oid}`);
+                    }}
+                  >
+                    Actualizar
+                  </button>
+                  <button
+                    onClick={e => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      this.onDelete(item._id['$oid']);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          ))}
+        </Table>
+      </Container>
+    );
   }
 }
 
