@@ -22,7 +22,7 @@ function rootReducer(state = initialState, action) {
     case ADDCUPON:
       return Object.assign({}, state, {
         ...state,
-        coupons: action.payload,
+        coupons: state.coupons.concat(action.payload),
       });
 
     case DELETE_COUPON:
