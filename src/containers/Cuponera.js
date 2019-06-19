@@ -30,6 +30,7 @@ class CouponList extends Component {
         <Table hover>
           <thead>
             <tr>
+              <th>Imagen</th>
               <th>Nombre</th>
               <th>Descripcion</th>
               <th>Publicado</th>
@@ -43,6 +44,11 @@ class CouponList extends Component {
                   history.push(`/detail/${item._id.$oid}`);
                 }}
               >
+                <th>
+                  {item.image && (
+                    <img style={{ width: 50, heigth: 50 }} src={item.image} />
+                  )}
+                </th>
                 <th scope="row">{item.name}</th>
                 <td>{item.description}</td>
                 <td>{item.is_published ? 'Publicado' : 'no publiado'}</td>
