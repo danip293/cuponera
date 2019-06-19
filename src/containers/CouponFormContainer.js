@@ -34,12 +34,13 @@ class CouponFormComponent extends Component {
   handleSubmit(values) {
     const {
       AddCoupons,
+      updateCoupon,
       match: {
         params: { id },
       },
     } = this.props;
     if (id) {
-      return;
+      return updateCoupon(id, values);
     }
     return AddCoupons(values);
   }

@@ -4,6 +4,7 @@ import {
   ADDCUPON,
   LIST_COUPONS,
   RETRIVE_COUPON,
+  UPDATE_COUPON,
 } from '../actions/coupons';
 
 const initialState = {
@@ -27,6 +28,18 @@ function rootReducer(state = initialState, action) {
       return Object.assign({}, state, { ...state });
     case RETRIVE_COUPON:
       return Object.assign({}, state, { ...state, coupon: action.payload });
+    case UPDATE_COUPON:
+      const { couponID, json } = action.payload;
+      return Object.assign({}, state, {
+        ...state,
+        coupons: state.coupons.map(x => {
+          if (x._id.$oid === couponID) {
+            return json;
+          }
+          return x;
+        }),
+      });
+
     default:
       return state;
   }

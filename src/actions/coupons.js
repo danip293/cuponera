@@ -63,7 +63,7 @@ export const retriveCoupon = couponID => (dispatch, getState) => {
 };
 
 export const updateCoupon = (couponID, json) => (dispatch, getState) => {
-  const url = '';
+  const url = `https://api.mlab.com/api/1/databases/cupones_descuentos_v1_prueba/collections/cupon_v1/${couponID}?apiKey=7N0hJ19t7vyboGPojW8evejTxlwizS-i`;
   const request = {
     method: 'PUT',
     body: JSON.stringify(json),
@@ -73,5 +73,5 @@ export const updateCoupon = (couponID, json) => (dispatch, getState) => {
   };
   return fetch(url, request)
     .then(response => response.json())
-    .then(json => dispatch({ type: UPDATE_COUPON, payload: json }));
+    .then(json => dispatch({ type: UPDATE_COUPON, payload: couponID, json }));
 };
