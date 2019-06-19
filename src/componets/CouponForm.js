@@ -1,6 +1,6 @@
 import React from 'react';
 import { renderField } from '../componets/RenderField';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { Badge, Form, FormGroup, Label } from 'reactstrap';
 import { validate, warn } from '../componets/Validations';
 import { ImageComponent } from '../componets/ImageComponent';
@@ -13,6 +13,9 @@ class CouponFormComponent extends React.Component {
       reset,
       submitting,
       discountPercenatage,
+
+      percentage_calculation_money,
+      percentage_calculation_percentage,
     } = this.props;
 
     const greaterThan = otherField => (value, previousValue, allValues) =>
@@ -22,7 +25,9 @@ class CouponFormComponent extends React.Component {
 
     return (
 
+
       <div>
+
         <Form onSubmit={handleSubmit} id="form1">
           {/*imagenes */}
           <FormGroup>
@@ -36,6 +41,7 @@ class CouponFormComponent extends React.Component {
               type="text"
               label="Nombre"
             />
+
           </FormGroup>
           {/* descripcion del cupon */}
           <FormGroup>
@@ -136,7 +142,7 @@ class CouponFormComponent extends React.Component {
           {/* publicar cupon en una fecha determinada*/}
           <FormGroup>
             <Label> Publicar cupon en esta fecha</Label>
-            <Field name="published_sice" component={renderField} type="data" />
+            <Field name="published_sice" component={renderField} type="date" />
           </FormGroup>
 
           {/* total de cupones  */}
@@ -185,11 +191,22 @@ class CouponFormComponent extends React.Component {
 
           {/*total de usos del cupoen el cual sera por default*/}
           <FormGroup>
+            <Label>Cupones echos validos</Label>
             <Field
               name="total_uses"
               component="input"
               normalize={greaterThan('total_uses')}
               disabled
+            />
+          </FormGroup>
+          {/* Localizacion del local puede o no llenar este campo sino se manda vacio */}
+          <FormGroup>
+            <Field
+              name="location"
+              component={renderField}
+              type="input"
+              label="Localizacion del Local"
+
             />
           </FormGroup>
 
@@ -207,9 +224,12 @@ class CouponFormComponent extends React.Component {
   }
 }
 
+
 export const CouponForm = reduxForm({
   form: 'contact',
   validate,
   warn,
   initialValues: { total_uses: 0 },
+
+
 })(CouponFormComponent);
