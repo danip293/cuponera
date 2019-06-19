@@ -25,7 +25,7 @@ class CouponFormComponent extends React.Component {
         <Form onSubmit={handleSubmit} id="form1">
           {/*imagenes */}
           <FormGroup>
-            <Field name="image" component={ImageComponent} />
+            <Field name="image" component={renderField} label="imagen" />
           </FormGroup>
           {/* nombre del cupon */}
           <FormGroup>
@@ -56,7 +56,7 @@ class CouponFormComponent extends React.Component {
           {/* tipo de cupon */}
           <div>
             <label>
-              Cupon de
+              Tipo de cupon
               {/* cupon de porcentaje es decir "se descuenta sierto porsentaje al producto" */}
               <div>
                 <FormGroup>
@@ -90,6 +90,15 @@ class CouponFormComponent extends React.Component {
                     disabled={discountPercenatage !== 'dinero'}
                   />
                 </FormGroup>
+                <FormGroup>
+                  <Field
+                    component={renderField}
+                    type="input"
+                    name="show_percentaje"
+                    disabled
+                    label="porcentaje de descuento"
+                  />
+                </FormGroup>
               </div>
             </label>
           </div>
@@ -119,8 +128,14 @@ class CouponFormComponent extends React.Component {
           </FormGroup>
 
           <FormGroup>
-            <label>Valido hasta</label>
+            <Label>Valido hasta</Label>
             <Field name="valid_until" component={renderField} type="date" />
+          </FormGroup>
+
+          {/* publicar cupon en una fecha determinada*/}
+          <FormGroup>
+            <Label> Publicar cupon en esta fecha</Label>
+            <Field name="published_sice" component={renderField} type="data" />
           </FormGroup>
 
           {/* total de cupones  */}
