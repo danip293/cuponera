@@ -13,7 +13,6 @@ class CouponFormComponent extends React.Component {
       reset,
       submitting,
       discountPercenatage,
-      readOnly,
     } = this.props;
 
     const greaterThan = otherField => (value, previousValue, allValues) =>
@@ -22,6 +21,7 @@ class CouponFormComponent extends React.Component {
         : previousValue;
 
     return (
+
       <div>
         <Form onSubmit={handleSubmit} id="form1">
           {/*imagenes */}
@@ -35,7 +35,6 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="text"
               label="Nombre"
-              disabled={readOnly}
             />
           </FormGroup>
           {/* descripcion del cupon */}
@@ -45,7 +44,6 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="text"
               label="Descripcion"
-              disabled={readOnly}
             />
           </FormGroup>
           <FormGroup>
@@ -54,7 +52,6 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="number"
               label="Precio de Producto"
-              disabled={readOnly}
             />
           </FormGroup>
           {/* tipo de cupon */}
@@ -70,13 +67,12 @@ class CouponFormComponent extends React.Component {
                     type="radio"
                     value="porcentaje"
                     label="Porcentaje Descuento"
-                    disabled={readOnly}
                   />
                   <Field
                     component={renderField}
                     type="number"
                     name="discount_percenatage"
-                    disabled={discountPercenatage !== 'porcentaje' && readOnly}
+                    disabled={discountPercenatage !== 'porcentaje'}
                   />
                 </FormGroup>
                 {/* cupon de precio es decir monetario "se descuentan 100 pesos a cierto producto" */}
@@ -92,7 +88,7 @@ class CouponFormComponent extends React.Component {
                     component={renderField}
                     type="number"
                     name="discount_price"
-                    disabled={discountPercenatage !== 'dinero' && readOnly}
+                    disabled={discountPercenatage !== 'dinero'}
                   />
                 </FormGroup>
                 <FormGroup>
@@ -115,7 +111,6 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="input"
               label="Terminos de uso"
-              disabled={readOnly}
             />
           </FormGroup>
 
@@ -130,22 +125,12 @@ class CouponFormComponent extends React.Component {
           <FormGroup>
             <Label>Valido desde</Label>
 
-            <Field
-              name="valid_sice"
-              component={renderField}
-              type="date"
-              disabled={readOnly}
-            />
+            <Field name="valid_sice" component={renderField} type="date" />
           </FormGroup>
 
           <FormGroup>
-            <label>Valido hasta</label>
-            <Field
-              name="valid_until"
-              component={renderField}
-              type="date"
-              disabled={readOnly}
-            />
+            <Label>Valido hasta</Label>
+            <Field name="valid_until" component={renderField} type="date" />
           </FormGroup>
 
           {/* publicar cupon en una fecha determinada*/}
@@ -162,7 +147,6 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="number"
               label="Total de cupones"
-              disabled={readOnly}
             />
           </FormGroup>
 
@@ -174,7 +158,6 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="number"
               label="Usos por usuario"
-              disabled={readOnly}
             />
           </FormGroup>
 
@@ -186,7 +169,6 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="checkbox"
               label="Publicar cupon"
-              disabled={readOnly}
             />
           </FormGroup>
 
@@ -198,7 +180,6 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="checkbox"
               label="Habilitar cupon"
-              disabled={readOnly}
             />
           </FormGroup>
 
@@ -230,4 +211,5 @@ export const CouponForm = reduxForm({
   form: 'contact',
   validate,
   warn,
+  initialValues: { total_uses: 0 },
 })(CouponFormComponent);
