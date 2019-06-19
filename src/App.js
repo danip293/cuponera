@@ -8,7 +8,7 @@ import {
   UpdateCouponContainer,
   DetailCouponContainer,
 } from './containers/CouponFormContainer';
-import CouponList from './containers/Cuponera';
+import CouponList from './containers/CouponList';
 import { QrReaderContainer } from './containers/QrReaderContainer';
 function App() {
   return (
