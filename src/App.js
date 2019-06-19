@@ -35,6 +35,7 @@ function App() {
           <Route path="/crear_cupon" component={CouponFormContainer} />
           <Route path="/administrar_cupones" component={CouponList} />
           <Route path="/lectorQR" component={QrReaderContainer} />
+          {/*<Route path="/detail/:id" component={} />*/}
         </div>
       </Router>
     </div>
