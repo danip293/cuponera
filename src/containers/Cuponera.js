@@ -40,9 +40,7 @@ class CouponList extends Component {
               <tbody key={index}>
                 <tr
                   onClick={() => {
-                    history.push(
-                      `${location.pathname}/detail/${item._id.$oid}`,
-                    );
+                    history.push(`/detail/${item._id.$oid}`);
                   }}
                 >
                   <th scope="row">{item.name}</th>
@@ -50,8 +48,22 @@ class CouponList extends Component {
                   <td>{item.is_published ? 'Publicado' : 'no publiado'}</td>
                   <td>{item.is_enable ? 'Habilitado' : 'Desabilitado'}</td>
                   <td>
-                    <button>Actualizar</button>
-                    <button onClick={() => this.onDelete(item._id['$oid'])}>
+                    <button
+                      onClick={e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        history.push(`/update/${item._id.$oid}`);
+                      }}
+                    >
+                      Actualizar
+                    </button>
+                    <button
+                      onClick={e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.onDelete(item._id['$oid']);
+                      }}
+                    >
                       Delete
                     </button>
                   </td>

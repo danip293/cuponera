@@ -6,6 +6,7 @@ import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import {
   CouponFormContainer,
   UpdateCouponContainer,
+  DetailCouponContainer,
 } from './containers/CouponFormContainer';
 import CouponList from './containers/Cuponera';
 import { QrReaderContainer } from './containers/QrReaderContainer';
@@ -40,7 +41,8 @@ function App() {
           <Route path="/crear_cupon" component={CouponFormContainer} />
           <Route path="/administrar_cupones" component={CouponList} />
           <Route path="/lectorQR" component={QrReaderContainer} />
-          <Route path="/detail/:id" component={UpdateCouponContainer} />
+          <Route path="/detail/:id" component={DetailCouponContainer} />
+          <Route path="/update/:id" component={UpdateCouponContainer} />
         </div>
       </Router>
     </div>

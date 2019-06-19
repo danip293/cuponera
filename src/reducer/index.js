@@ -1,8 +1,14 @@
 // import { MOSTRAR, ADDCUPON } from '../actions-type/';
-import { DELETE_COUPON, ADDCUPON, LIST_COUPONS } from '../actions/coupons';
+import {
+  DELETE_COUPON,
+  ADDCUPON,
+  LIST_COUPONS,
+  RETRIVE_COUPON,
+} from '../actions/coupons';
 
 const initialState = {
   coupons: [],
+  coupon: {},
 };
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -19,9 +25,11 @@ function rootReducer(state = initialState, action) {
       });
     case DELETE_COUPON:
       return Object.assign({}, state, { ...state });
+    case RETRIVE_COUPON:
+      return Object.assign({}, state, { ...state, coupon: action.payload });
+    default:
+      return state;
   }
-
-  return state;
 }
 
 export default rootReducer;

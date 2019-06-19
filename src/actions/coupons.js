@@ -47,9 +47,9 @@ export const deleteCoupon = couponID => (dispatch, getState) => {
 };
 
 export const retriveCoupon = couponID => (dispatch, getState) => {
-  const url = '';
+  const url = `https://api.mlab.com/api/1/databases/cupones_descuentos_v1_prueba/collections/cupon_v1/${couponID}?apiKey=7N0hJ19t7vyboGPojW8evejTxlwizS-i`;
   const request = {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
