@@ -97,13 +97,14 @@ class CouponFormComponent extends React.Component {
                     disabled={discountPercenatage !== 'dinero'}
                   />
                 </FormGroup>
+                {/* Este es en base al tipo de cupon que utilizo el usuario */}
                 <FormGroup>
                   <Field
                     component={renderField}
                     type="input"
                     name="show_percentaje"
                     disabled
-                    label="porcentaje de descuento"
+                    label="Equivalente de cupon en Dinero o Porcentaje"
                   />
                 </FormGroup>
               </div>
