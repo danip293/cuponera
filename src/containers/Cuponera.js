@@ -15,7 +15,7 @@ class CouponList extends Component {
   }
 
   render() {
-    const coupons = this.props.coupons;
+    const { coupons, history, location } = this.props;
 
     if (!coupons) {
       return (
@@ -27,7 +27,7 @@ class CouponList extends Component {
       return (
         <div>
           {console.log(coupons)}
-          <Table borderless>
+          <Table hover>
             <thead>
               <tr>
                 <th>Nombre</th>
@@ -38,7 +38,13 @@ class CouponList extends Component {
             </thead>
             {coupons.map((item, index) => (
               <tbody key={index}>
-                <tr>
+                <tr
+                  onClick={() => {
+                    history.push(
+                      `${location.pathname}/detail/${item._id.$oid}`,
+                    );
+                  }}
+                >
                   <th scope="row">{item.name}</th>
                   <td>{item.description}</td>
                   <td>{item.is_published ? 'Publicado' : 'no publiado'}</td>
