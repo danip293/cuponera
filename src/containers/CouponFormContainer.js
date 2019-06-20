@@ -41,7 +41,7 @@ class CouponFormComponent extends Component {
     if (id) {
       return updateCoupon(id, values);
     }
-    return AddCoupons(values);
+    return AddCoupons({ ...values, total_uses: 0 });
   }
   render() {
     const {
