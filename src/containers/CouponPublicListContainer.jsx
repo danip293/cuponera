@@ -33,7 +33,7 @@ class CouponPublicListComponent extends React.Component {
         <h2>Listado de cupones</h2>
         <Row>
           {couponsList.map(item => (
-            <Col>
+            <Col key={item._id.$oid}>
               <Card>
                 {item.image && (
                   <CardImg
@@ -46,14 +46,23 @@ class CouponPublicListComponent extends React.Component {
                 <CardBody>
                   <CardTitle>{item.name}</CardTitle>
                   <CardText>{item.description}</CardText>
-                  <Button>Hacer valido</Button>
-                  <h1>
-                    <Badge style={{ float: 'right' }}>
+                  <h5>
+                    <strike>{item.list_price} </strike>
+                  </h5>
+                  <Button color="success">Hacer valido</Button>
+
+                  <h2>
+                    <Badge
+                      color="info"
+                      style={{
+                        float: 'right',
+                      }}
+                    >
                       {item.discount_percenatage
                         ? `-${item.discount_percenatage}%`
                         : ` -${item.discount_price}$`}
                     </Badge>
-                  </h1>
+                  </h2>
                 </CardBody>
               </Card>
             </Col>
