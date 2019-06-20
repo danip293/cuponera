@@ -1,4 +1,5 @@
 import React from 'react';
+import { Input } from 'reactstrap';
 
 export const renderField = ({
   input,
@@ -12,7 +13,7 @@ export const renderField = ({
     <div>
       <label>{label}</label>
       <div>
-        <input {...inputProps} placeholder={label} type={type} />
+        <Input {...inputProps} placeholder={label} type={type} />
         {touched &&
           ((error && <span>{error}</span>) ||
             (warning && <span>{warning}</span>))}
