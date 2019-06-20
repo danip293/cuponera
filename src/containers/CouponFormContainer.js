@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { formValueSelector } from 'redux-form';
+import { formValueSelector, change } from 'redux-form';
 
 // Csss
 import '../App.css';
@@ -25,8 +25,21 @@ class CouponFormComponent extends Component {
       retriveCoupon,
     } = this.props;
     if (id) {
-      console.log(id);
       retriveCoupon(id);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    // initiallice form
+    if (
+      this.props.initialValues !== prevProps.initialValues &&
+      Object.keys(this.props.initialValues).length
+    ) {
+      Object.keys(this.props.initialValues).forEach(element => {
+        this.props.dispatch(
+          change('cuponsForm', element, this.props.initialValues[element]),
+        );
+      });
     }
   }
 
@@ -100,6 +113,7 @@ const CouponsFactory = (readOnly, asDetail) =>
         AddCoupons: val => dispatch(AddCoupons(val)),
         retriveCoupon: id => dispatch(retriveCoupon(id)),
         updateCoupon: (id, json) => dispatch(updateCoupon(id, json)),
+        dispatch,
       };
     },
   )(CouponFormComponent);
