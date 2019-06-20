@@ -1,11 +1,33 @@
 import React from 'react';
 import { renderField } from '../componets/RenderField';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
+import { Field, reduxForm, formValueSelector, change } from 'redux-form';
 import { Badge, Form, FormGroup, Label } from 'reactstrap';
 import { validate, warn } from '../componets/Validations';
 import { ImageComponent } from '../componets/ImageComponent';
 
 class CouponFormComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.calculateFinalPrice = this.calculateFinalPrice.bind(this);
+  }
+
+  calculateFinalPrice(event, newValue, previousValue, name) {
+    const { dispatch } = this.props;
+    const values = { ...this.props, [name]: newValue };
+    const { list_price, discount_price, discount_percenatage } = values;
+
+    if (list_price & discount_price || discount_percenatage) {
+      let finalPrice = 0;
+      if (discount_price) {
+        finalPrice = list_price - discount_price;
+      }
+      if (discount_percenatage) {
+        finalPrice = list_price - (list_price * discount_percenatage) / 100;
+      }
+
+      dispatch(change('contact', 'show_percentaje', finalPrice));
+    }
+  }
   render() {
     const {
       handleSubmit,
@@ -16,18 +38,20 @@ class CouponFormComponent extends React.Component {
 
       percentage_calculation_money,
       percentage_calculation_percentage,
+      list_price,
+      discount_price,
+      discount_percenatage,
+      dispatch,
     } = this.props;
 
     const greaterThan = otherField => (value, previousValue, allValues) =>
       parseFloat(value) > parseFloat(allValues[otherField])
         ? value
         : previousValue;
+    console.log({ list_price, discount_price, discount_percenatage, dispatch });
 
     return (
-
-
       <div>
-
         <Form onSubmit={handleSubmit} id="form1">
           {/*imagenes */}
           <FormGroup>
@@ -41,7 +65,6 @@ class CouponFormComponent extends React.Component {
               type="text"
               label="Nombre"
             />
-
           </FormGroup>
           {/* descripcion del cupon */}
           <FormGroup>
@@ -58,12 +81,16 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="number"
               label="Precio de Producto"
+              onChange={this.calculateFinalPrice}
             />
           </FormGroup>
           {/* tipo de cupon */}
           <div>
             <label>
-              Tipo de cupon
+              <h4>
+                <Badge color="info"> Tipo de cupon</Badge>
+              </h4>
+
               {/* cupon de porcentaje es decir "se descuenta sierto porsentaje al producto" */}
               <div>
                 <FormGroup>
@@ -79,6 +106,7 @@ class CouponFormComponent extends React.Component {
                     type="number"
                     name="discount_percenatage"
                     disabled={discountPercenatage !== 'porcentaje'}
+                    onChange={this.calculateFinalPrice}
                   />
                 </FormGroup>
                 {/* cupon de precio es decir monetario "se descuentan 100 pesos a cierto producto" */}
@@ -95,6 +123,7 @@ class CouponFormComponent extends React.Component {
                     type="number"
                     name="discount_price"
                     disabled={discountPercenatage !== 'dinero'}
+                    onChange={this.calculateFinalPrice}
                   />
                 </FormGroup>
                 {/* Este es en base al tipo de cupon que utilizo el usuario */}
@@ -207,7 +236,6 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="input"
               label="Localizacion del Local"
-
             />
           </FormGroup>
 
@@ -225,12 +253,8 @@ class CouponFormComponent extends React.Component {
   }
 }
 
-
 export const CouponForm = reduxForm({
   form: 'contact',
   validate,
   warn,
-  initialValues: { total_uses: 0 },
-
-
 })(CouponFormComponent);

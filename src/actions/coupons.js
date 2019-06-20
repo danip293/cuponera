@@ -42,7 +42,7 @@ export const deleteCoupon = couponID => (dispatch, getState) => {
   return fetch(url, request)
     .then(response => response.json())
     .then(json => {
-      dispatch({ type: DELETE_COUPON, payload: couponID });
+      dispatch({ type: DELETE_COUPON, payload: { couponID } });
     });
 };
 

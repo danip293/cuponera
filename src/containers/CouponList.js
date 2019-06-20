@@ -91,6 +91,7 @@ const mapDispatchToProps = dispatch => {
   return {
     deleteCoupon: id => dispatch(deleteCoupon(id)),
     getCouponsList: () => dispatch(getCouponsList()),
+    dispatch,
   };
 };
 
