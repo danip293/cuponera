@@ -28,18 +28,28 @@ class CouponFormComponent extends React.Component {
       let finalDiscount_Percentage = 0;
       let finalDiscount_Price = 0;
       if (discount_price) {
-        finalPrice = list_price - discount_price;
-        finalDiscount_Percentage = list_price - ((list_price * discount_price) / 100);
+        // Descuento en porcentaje aqui lo calculamos
+        finalPrice = list_price - discount_price
+        finalDiscount_Percentage = (discount_price * 100) / list_price;
+        // finalDiscount_Percentage = Math.floor((list_price * discount_price) / 100);
+
         dispatch(change('cuponsForm', 'discount_percentage', finalDiscount_Percentage));
+
+
       }
       if (discount_percentage) {
+        // Descuento en precio aqui lo calculamos
+
+
         finalPrice = list_price - ((list_price * discount_percentage) / 100);
+
         finalDiscount_Price = (list_price * discount_percentage) / 100;
         dispatch(change('cuponsForm', 'discount_price', finalDiscount_Price));
 
-      }
 
-      dispatch(change('cuponsForm', 'show_percentaje', finalPrice));
+
+      }
+      dispatch(change('cuponsForm', 'final_price', finalPrice));
     }
   }
 
@@ -107,7 +117,7 @@ class CouponFormComponent extends React.Component {
               <div>
                 <FormGroup>
                   <Field
-                    name="porcentaje_descuento"
+                    name="porcentage_descuento"
                     component={renderField}
                     type="radio"
                     value="porcentaje"
@@ -130,7 +140,7 @@ class CouponFormComponent extends React.Component {
                 {/* cupon de precio es decir monetario "se descuentan 100 pesos a cierto producto" */}
                 <FormGroup>
                   <Field
-                    name="porcentaje_descuento"
+                    name="porcentage_descuento"
                     component={renderField}
                     type="radio"
                     value="dinero"
