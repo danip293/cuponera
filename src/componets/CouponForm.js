@@ -1,7 +1,14 @@
 import React from 'react';
 import { renderField } from '../componets/RenderField';
 import { Field, reduxForm, formValueSelector, change } from 'redux-form';
-import { Badge, Form, FormGroup, Label } from 'reactstrap';
+import {
+  Badge,
+  Form,
+  FormGroup,
+  Label,
+  InputGroup,
+  InputGroupAddon,
+} from 'reactstrap';
 import { validate, warn } from '../componets/Validations';
 import { ImageComponent } from '../componets/ImageComponent';
 
@@ -106,13 +113,19 @@ class CouponFormComponent extends React.Component {
                     value="porcentaje"
                     label="Porcentaje Descuento"
                   />
-                  <Field
-                    component={renderField}
-                    type="number"
-                    name="discount_percentage"
-                    disabled={discountPercentage !== 'porcentaje'}
-                    onChange={this.calculateFinalPrice}
-                  />
+                </FormGroup>
+                <FormGroup>
+                  <InputGroup>
+                    <InputGroupAddon addonType="prepend">%</InputGroupAddon>
+                    <Field
+                      component={renderField}
+                      type="number"
+                      name="discount_percentage"
+                      disabled={discountPercentage !== 'porcentaje'}
+                      onChange={this.calculateFinalPrice}
+                    />
+                  </InputGroup>
+
                 </FormGroup>
                 {/* cupon de precio es decir monetario "se descuentan 100 pesos a cierto producto" */}
                 <FormGroup>
@@ -123,13 +136,17 @@ class CouponFormComponent extends React.Component {
                     value="dinero"
                     label="Precio Descuento"
                   />
-                  <Field
-                    component={renderField}
-                    type="number"
-                    name="discount_price"
-                    disabled={discountPercentage !== 'dinero'}
-                    onChange={this.calculateFinalPrice}
-                  />
+                  <InputGroup>
+                    <InputGroupAddon addonType="prepend">$</InputGroupAddon>
+                    <Field
+                      component={renderField}
+                      type="number"
+                      name="discount_price"
+                      disabled={discountPercentage !== 'dinero'}
+                      onChange={this.calculateFinalPrice}
+                    />
+                  </InputGroup>
+
                 </FormGroup>
                 {/* Este es en base al tipo de cupon que utilizo el usuario */}
                 <FormGroup>
@@ -225,7 +242,7 @@ class CouponFormComponent extends React.Component {
           </FormGroup>
 
           {/*total de usos del cupoen el cual sera por default*/}
-          <FormGroup>
+          {/* <FormGroup>
             <Label>Cupones echos validos</Label>
             <Field
               name="total_uses"
@@ -234,6 +251,7 @@ class CouponFormComponent extends React.Component {
               disabled
             />
           </FormGroup>
+        */}
           {/* Localizacion del local puede o no llenar este campo sino se manda vacio */}
           <FormGroup>
             <Field
