@@ -10,18 +10,13 @@ export const validate = values => {
     errors.description = 'Requerido';
   }
   //precio de lista del producto
-  if (!values.list_price) {
+  if (!(Number(values.list_price))) {
     errors.list_price = 'Requerido';
-  } else if (values.list_price < 0) {
+  } else if (isNaN(Number(values.list_price)) < 0) {
     errors.list_price = 'El precio debe ser mayor a Cero';
   }
 
-  // terminos de uso del cupon
-  if (!values.terms_of_user) {
-    errors.terms_of_user = 'Requerido';
-  } else if (values.terms_of_user.length > 256) {
-    errors.terms_of_user = 'Descripcion muy grande ';
-  }
+
 
   // precio descuentos ya sea porcentaje o precio
   if (!values.precio_descuento) {
@@ -31,7 +26,12 @@ export const validate = values => {
   } else if (Number(values.precio_descuento) < 0) {
     errors.precio_descuento = 'Lo siento debe ser un descuento mayor a 0';
   }
-
+  // terminos de uso del cupon
+  if (!values.terms_of_user) {
+    errors.terms_of_user = 'Requerido';
+  } else if (values.terms_of_user.length > 256) {
+    errors.terms_of_user = 'Descripcion muy grande ';
+  }
   // fechas del cupon icnio y fin solo se requiren
   if (!values.valid_sice) {
     errors.valid_sice = 'Requerido';

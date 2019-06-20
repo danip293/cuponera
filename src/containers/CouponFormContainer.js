@@ -45,42 +45,42 @@ class CouponFormComponent extends Component {
   }
   render() {
     const {
-      discountPercenatage,
+      discountPercentage,
       initialValues,
       readOnly,
       percentage_calculation_money,
       percentage_calculation_percentage,
       list_price,
       discount_price,
-      discount_percenatage,
+      discount_percentage,
     } = this.props;
 
     return (
       <Container>
         <CouponForm
           onSubmit={this.handleSubmit}
-          discountPercenatage={discountPercenatage}
+          discountPercentage={discountPercentage}
           initialValues={initialValues}
           percentage_calculation_money={percentage_calculation_money}
           percentage_calculation_percentage={percentage_calculation_percentage}
           readOnly={readOnly}
           list_price={list_price}
           discount_price={discount_price}
-          discount_percenatage={discount_percenatage}
+          discount_percentage={discount_percentage}
         />
       </Container>
     );
   }
 }
 
-const selector = formValueSelector('contact');
+const selector = formValueSelector('cuponsForm');
 const mapStateToProps = (readOnly, asDetail) => state => {
   const obj = {
-    discountPercenatage: selector(state, 'porcentaje_descuento'),
+    discountPercentage: selector(state, 'porcentaje_descuento'),
     // uno es de dinero y el otro de porcentaje
     list_price: selector(state, 'list_price'),
     discount_price: selector(state, 'discount_price'), //este me ayuda a obtener el valor de descuento de dinero o porcentaje y me ayudara a calcular ya se el porcentaje de descuento o el precio de descuento
-    discount_percenatage: selector(state, 'discount_percenatage'),
+    discount_percentage: selector(state, 'discount_percentage'),
 
     readOnly,
   };

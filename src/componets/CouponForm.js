@@ -14,33 +14,38 @@ class CouponFormComponent extends React.Component {
   calculateFinalPrice(event, newValue, previousValue, name) {
     const { dispatch } = this.props;
     const values = { ...this.props, [name]: newValue };
-    const { list_price, discount_price, discount_percenatage } = values;
+    const { list_price, discount_price, discount_percentage } = values;
 
-    if (list_price & discount_price || discount_percenatage) {
+    if (list_price & discount_price || discount_percentage) {
       let finalPrice = 0;
+      let finalDiscount_Percentage = 0;
+      let finalDiscount_Price = 0;
       if (discount_price) {
         finalPrice = list_price - discount_price;
+        finalDiscount_Percentage = list_price - ((list_price * discount_price) / 100);
+        dispatch(change('cuponsForm', 'discount_percentage', finalDiscount_Percentage));
       }
-      if (discount_percenatage) {
-        finalPrice = list_price - (list_price * discount_percenatage) / 100;
+      if (discount_percentage) {
+        finalPrice = list_price - ((list_price * discount_percentage) / 100);
+        finalDiscount_Price = (list_price * discount_percentage) / 100;
+        dispatch(change('cuponsForm', 'discount_price', finalDiscount_Price));
+
       }
 
-      dispatch(change('contact', 'show_percentaje', finalPrice));
+      dispatch(change('cuponsForm', 'show_percentaje', finalPrice));
     }
   }
+
   render() {
     const {
       handleSubmit,
       pristine,
       reset,
       submitting,
-      discountPercenatage,
-
-      percentage_calculation_money,
-      percentage_calculation_percentage,
+      discountPercentage,
       list_price,
       discount_price,
-      discount_percenatage,
+      discount_percentage,
       dispatch,
     } = this.props;
 
@@ -48,7 +53,7 @@ class CouponFormComponent extends React.Component {
       parseFloat(value) > parseFloat(allValues[otherField])
         ? value
         : previousValue;
-    console.log({ list_price, discount_price, discount_percenatage, dispatch });
+    console.log({ list_price, discount_price, discount_percentage, dispatch });
 
     return (
       <div>
@@ -104,8 +109,8 @@ class CouponFormComponent extends React.Component {
                   <Field
                     component={renderField}
                     type="number"
-                    name="discount_percenatage"
-                    disabled={discountPercenatage !== 'porcentaje'}
+                    name="discount_percentage"
+                    disabled={discountPercentage !== 'porcentaje'}
                     onChange={this.calculateFinalPrice}
                   />
                 </FormGroup>
@@ -122,7 +127,7 @@ class CouponFormComponent extends React.Component {
                     component={renderField}
                     type="number"
                     name="discount_price"
-                    disabled={discountPercenatage !== 'dinero'}
+                    disabled={discountPercentage !== 'dinero'}
                     onChange={this.calculateFinalPrice}
                   />
                 </FormGroup>
@@ -254,7 +259,7 @@ class CouponFormComponent extends React.Component {
 }
 
 export const CouponForm = reduxForm({
-  form: 'contact',
+  form: 'cuponsForm',
   validate,
   warn,
 })(CouponFormComponent);
