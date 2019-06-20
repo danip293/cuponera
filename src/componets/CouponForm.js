@@ -146,16 +146,15 @@ class CouponFormComponent extends React.Component {
                       onChange={this.calculateFinalPrice}
                     />
                   </InputGroup>
-
                 </FormGroup>
                 {/* Este es en base al tipo de cupon que utilizo el usuario */}
                 <FormGroup>
                   <Field
                     component={renderField}
                     type="input"
-                    name="show_percentaje"
+                    name="final_price"
                     disabled
-                    label="Equivalente de cupon en Dinero o Porcentaje"
+                    label="precio final"
                   />
                 </FormGroup>
               </div>
