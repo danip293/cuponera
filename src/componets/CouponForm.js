@@ -16,8 +16,8 @@ class CouponFormComponent extends React.Component {
   constructor(props) {
     super(props);
     this.calculateFinalPrice = this.calculateFinalPrice.bind(this);
+    this.truncateDecimals = (num) => Number.parseFloat(num).toFixed(1)
   }
-
   calculateFinalPrice(event, newValue, previousValue, name) {
     const { dispatch } = this.props;
     const values = { ...this.props, [name]: newValue };
@@ -33,28 +33,28 @@ class CouponFormComponent extends React.Component {
       if (name === 'discount_price') {
         // Descuento en porcentaje aqui lo calculamos
         finalPrice = discount_price;
-        finalDiscount_Percentage = ((list_price - discount_price) / list_price) * 100
-        dispatch(change('cuponsForm', 'discount_percentage', finalDiscount_Percentage));
-        return dispatch(change('cuponsForm', 'final_price', finalPrice));
+        finalDiscount_Percentage = ((list_price - discount_price) / list_price) * 100;
+        dispatch(change('cuponsForm', 'discount_percentage', this.truncateDecimals(finalDiscount_Percentage)));
+        return dispatch(change('cuponsForm', 'final_price', this.truncateDecimals(finalPrice)));
 
       }
       if (name === 'discount_percentage') {
         // Descuento en precio aqui lo calculamos
         finalPrice = list_price - ((list_price * discount_percentage) / 100);
-        dispatch(change('cuponsForm', 'discount_price', finalPrice));
-        return dispatch(change('cuponsForm', 'final_price', finalPrice));
+        dispatch(change('cuponsForm', 'discount_price', this.truncateDecimals(finalPrice)));
+        return dispatch(change('cuponsForm', 'final_price', this.truncateDecimals(finalPrice)));
       }
       if (name = 'list_price') {
         if (discount_price) {
           finalPrice = discount_price;
           finalDiscount_Percentage = ((list_price - discount_price) / list_price) * 100
-          dispatch(change('cuponsForm', 'final_price', finalPrice));
+          dispatch(change('cuponsForm', 'final_price', this.truncateDecimals(finalPrice)));
           return dispatch(change('cuponsForm', 'discount_percentage', finalDiscount_Percentage));
         }
         if (discount_percentage) {
           finalPrice = list_price - ((list_price * discount_percentage) / 100);
-          dispatch(change('cuponsForm', 'discount_price', finalPrice));
-          return dispatch(change('cuponsForm', 'final_price', finalPrice));
+          dispatch(change('cuponsForm', 'discount_price', this.truncateDecimals(finalPrice)));
+          return dispatch(change('cuponsForm', 'final_price', this.truncateDecimals(finalPrice)));
 
         }
 
