@@ -93,7 +93,7 @@ class CouponFormComponent extends React.Component {
             <Field
               name="description"
               component={renderField}
-              type="text"
+              type="textarea"
               label="Descripcion"
             />
           </FormGroup>
