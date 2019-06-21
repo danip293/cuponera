@@ -23,33 +23,44 @@ class CouponFormComponent extends React.Component {
     const values = { ...this.props, [name]: newValue };
     const { list_price, discount_price, discount_percentage } = values;
 
+    console.log("onchange values", { list_price, discount_price, discount_percentage });
     if (list_price & discount_price || discount_percentage) {
       let finalPrice = 0;
       let finalDiscount_Percentage = 0;
       let finalDiscount_Price = 0;
-      if (discount_price) {
+
+
+      if (name === 'discount_price') {
         // Descuento en porcentaje aqui lo calculamos
-        finalPrice = list_price - discount_price
-        finalDiscount_Percentage = (discount_price * 100) / list_price;
-        // finalDiscount_Percentage = Math.floor((list_price * discount_price) / 100);
-
+        finalPrice = discount_price;
+        finalDiscount_Percentage = ((list_price - discount_price) / list_price) * 100
         dispatch(change('cuponsForm', 'discount_percentage', finalDiscount_Percentage));
-
+        return dispatch(change('cuponsForm', 'final_price', finalPrice));
 
       }
-      if (discount_percentage) {
+      if (name === 'discount_percentage') {
         // Descuento en precio aqui lo calculamos
-
-
         finalPrice = list_price - ((list_price * discount_percentage) / 100);
+        dispatch(change('cuponsForm', 'discount_price', finalPrice));
+        return dispatch(change('cuponsForm', 'final_price', finalPrice));
+      }
+      if (name = 'list_price') {
+        if (discount_price) {
+          finalPrice = discount_price;
+          finalDiscount_Percentage = ((list_price - discount_price) / list_price) * 100
+          dispatch(change('cuponsForm', 'final_price', finalPrice));
+          return dispatch(change('cuponsForm', 'discount_percentage', finalDiscount_Percentage));
+        }
+        if (discount_percentage) {
+          finalPrice = list_price - ((list_price * discount_percentage) / 100);
+          dispatch(change('cuponsForm', 'discount_price', finalPrice));
+          return dispatch(change('cuponsForm', 'final_price', finalPrice));
 
-        finalDiscount_Price = (list_price * discount_percentage) / 100;
-        dispatch(change('cuponsForm', 'discount_price', finalDiscount_Price));
+        }
 
 
 
       }
-      dispatch(change('cuponsForm', 'final_price', finalPrice));
     }
   }
 
@@ -70,7 +81,7 @@ class CouponFormComponent extends React.Component {
       parseFloat(value) > parseFloat(allValues[otherField])
         ? value
         : previousValue;
-    console.log({ list_price, discount_price, discount_percentage, dispatch });
+    // console.log({ list_price, discount_price, discount_percentage, dispatch });
 
     return (
       <div>
@@ -104,6 +115,8 @@ class CouponFormComponent extends React.Component {
               type="number"
               label="Precio de Producto"
               onChange={this.calculateFinalPrice}
+              parse={value => !value ? null : Number(value)}
+
             />
           </FormGroup>
           {/* tipo de cupon */}
@@ -133,6 +146,7 @@ class CouponFormComponent extends React.Component {
                       name="discount_percentage"
                       disabled={discountPercentage !== 'porcentaje'}
                       onChange={this.calculateFinalPrice}
+                      parse={value => !value ? null : Number(value)}
                     />
                   </InputGroup>
 
@@ -154,6 +168,7 @@ class CouponFormComponent extends React.Component {
                       name="discount_price"
                       disabled={discountPercentage !== 'dinero'}
                       onChange={this.calculateFinalPrice}
+                      parse={value => !value ? null : Number(value)}
                     />
                   </InputGroup>
                 </FormGroup>
@@ -165,6 +180,7 @@ class CouponFormComponent extends React.Component {
                     name="final_price"
                     disabled
                     label="precio final"
+                    parse={value => !value ? null : Number(value)}
                   />
                 </FormGroup>
               </div>
@@ -214,6 +230,7 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="number"
               label="Total de cupones"
+              parse={value => !value ? null : Number(value)}
             />
           </FormGroup>
 
@@ -225,6 +242,7 @@ class CouponFormComponent extends React.Component {
               component={renderField}
               type="number"
               label="Usos por usuario"
+              parse={value => !value ? null : Number(value)}
             />
           </FormGroup>
 
