@@ -15,6 +15,7 @@ import CouponList from './containers/CouponList';
 import { CouponPublicListContainer } from './containers/CouponPublicListContainer';
 import { QrGeneratorContainer } from './containers/QrGeneratorContainer';
 import { QrReaderContainer } from './containers/QrReaderContainer';
+import { CouponPublicDetail } from './containers/CouponPublicDetail';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
           <Route path="/detail/:id" component={DetailCouponContainer} />
           <Route path="/update/:id" component={UpdateCouponContainer} />
           <Route path="/listadoPublico" component={CouponPublicListContainer} />
+          <Route path="/detallePublico/:id" component={CouponPublicDetail} />
           <Route path="/generadordeQR" component={QrGeneratorContainer} />
         </div>
       </Router>
