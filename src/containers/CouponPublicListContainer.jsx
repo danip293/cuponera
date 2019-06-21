@@ -11,6 +11,8 @@ import {
   CardImg,
   Button,
   Badge,
+  CardFooter,
+  CardHeader,
 } from 'reactstrap';
 import { connect } from 'react-redux';
 
@@ -43,27 +45,55 @@ class CouponPublicListComponent extends React.Component {
                     alt="Card image cap"
                   />
                 )}
-                <CardBody>
-                  <CardTitle>{item.name}</CardTitle>
-                  <CardText>{item.description}</CardText>
-                  <h5>
-                    <strike>{item.list_price} </strike>
-                  </h5>
-                  <Button color="success">Hacer valido</Button>
 
-                  <h2>
-                    <Badge
-                      color="info"
-                      style={{
-                        float: 'right',
-                      }}
-                    >
-                      {item.discount_percenatage
-                        ? `-${item.discount_percenatage}%`
-                        : ` -${item.discount_price}$`}
-                    </Badge>
-                  </h2>
+                <CardBody>
+                  <CardTitle>
+                    <h2>{item.name}</h2>
+                  </CardTitle>
+                  <CardText>{item.description}</CardText>
+                  <hr />
+                  <Row>
+                    <Col>
+                      <h2>
+                        <Badge color="info">
+                          <strike>${item.list_price} </strike>
+                        </Badge>
+                      </h2>
+                    </Col>
+                    <Col>
+                      <h2>
+                        <Badge color="danger">
+                          %{item.discount_percenatage}
+                        </Badge>
+                      </h2>
+                    </Col>
+                    <Col>
+                      <h2>
+                        <Badge color="success">
+                          {item.discount_percenatage
+                            ? `-${item.discount_percenatage}%`
+                            : ` -${item.discount_price}$`}
+                        </Badge>
+                      </h2>
+                    </Col>
+                  </Row>
                 </CardBody>
+                <CardFooter>
+                  <Row>
+                    <Col style={{ textAlign: 'center' }}>
+                      Empieza
+                      <div>
+                        <h4> {item.valid_sice}</h4>
+                      </div>
+                    </Col>
+                    <Col style={{ textAlign: 'center' }}>
+                      Termina
+                      <div>
+                        <h4>{item.valid_until}</h4>
+                      </div>
+                    </Col>
+                  </Row>
+                </CardFooter>
               </Card>
             </Col>
           ))}
