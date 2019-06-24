@@ -1,7 +1,7 @@
 import React from 'react';
 import QrReader from 'react-qr-reader';
 
-import { Container, Row, Col, CardBody, Card } from 'reactstrap';
+import { Row, Col, CardBody, Card } from 'reactstrap';
 
 export class QrScannerComponent extends React.Component {
   constructor(props) {

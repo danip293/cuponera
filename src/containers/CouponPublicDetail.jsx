@@ -12,10 +12,6 @@ export class CouponPublicDetailComponent extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = { collapse: false };
   }
-
-  toggle() {
-    this.setState(state => ({ collapse: !state.collapse }));
-  }
   componentDidMount() {
     const {
       match: {
@@ -26,6 +22,10 @@ export class CouponPublicDetailComponent extends React.Component {
     if (id) {
       dispatch(retriveCoupon(id));
     }
+  }
+
+  toggle() {
+    this.setState(state => ({ collapse: !state.collapse }));
   }
 
   render() {

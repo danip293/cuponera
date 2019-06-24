@@ -11,7 +11,7 @@ class CouponPublicListComponent extends React.Component {
   }
   render() {
     const { couponsList, history } = this.props;
-    console.log(couponsList);
+
     return (
       <Container>
         <h2>Listado de cupones</h2>
