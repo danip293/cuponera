@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { formValueSelector, change } from 'redux-form';
-
-// Csss
-import '../App.css';
-
-import { AddCoupons } from '../actions/coupons';
-import { CouponForm } from '../componets/CouponForm';
 import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 
-import { retriveCoupon, updateCoupon } from '../actions/coupons';
+// Css
+import '../App.css';
+
+// Components
+import { CouponForm } from '../componets/CouponForm';
+import { CustomerList } from '../componets/CustomersList';
+
+// Action
+import { retriveCoupon, updateCoupon, AddCoupons } from '../actions/coupons';
 
 class CouponFormComponent extends Component {
   constructor(props) {
@@ -81,6 +83,8 @@ class CouponFormComponent extends Component {
           discount_price={discount_price}
           discount_percentage={discount_percentage}
         />
+
+        {readOnly && <CustomerList />}
       </Container>
     );
   }
