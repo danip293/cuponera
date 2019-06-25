@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderField } from '../componets/RenderField';
+import { renderField } from './RenderField';
 import { Field, reduxForm, formValueSelector, change } from 'redux-form';
 import {
   Badge,
@@ -9,14 +9,14 @@ import {
   InputGroup,
   InputGroupAddon,
 } from 'reactstrap';
-import { validate, warn } from '../componets/Validations';
-import { ImageComponent } from '../componets/ImageComponent';
+import { validate, warn } from './Validations';
+import { ImageComponent } from './ImageComponent';
 
 class CouponFormComponent extends React.Component {
   constructor(props) {
     super(props);
     this.calculateFinalPrice = this.calculateFinalPrice.bind(this);
-    this.truncateDecimals = num => Number.parseFloat(num).toFixed(1);
+    this.truncateDecimals = num => Number.parseFloat(Number.parseFloat(num).toFixed(1))
   }
   calculateFinalPrice(event, newValue, previousValue, name) {
     const { dispatch } = this.props;
@@ -87,7 +87,7 @@ class CouponFormComponent extends React.Component {
             change(
               'cuponsForm',
               'discount_percentage',
-              finalDiscount_Percentage,
+              this.truncateDecimals(finalDiscount_Percentage,)
             ),
           );
         }
@@ -163,7 +163,7 @@ class CouponFormComponent extends React.Component {
               type="number"
               label="Precio de Producto"
               onChange={this.calculateFinalPrice}
-              parse={value => (!value ? null : Number(value))}
+              parse={value => (!value ? null : Number.parseFloat(value))}
             />
           </FormGroup>
           {/* tipo de cupon */}
@@ -193,7 +193,7 @@ class CouponFormComponent extends React.Component {
                       name="discount_percentage"
                       disabled={discountPercentage !== 'porcentaje'}
                       onChange={this.calculateFinalPrice}
-                      parse={value => (!value ? null : Number(value))}
+                      parse={value => (!value ? null : Number.parseFloat(value))}
                     />
                   </InputGroup>
                 </FormGroup>
@@ -214,7 +214,7 @@ class CouponFormComponent extends React.Component {
                       name="discount_price"
                       disabled={discountPercentage !== 'dinero'}
                       onChange={this.calculateFinalPrice}
-                      parse={value => (!value ? null : Number(value))}
+                      parse={value => (!value ? null : Number.parseFloat(value))}
                     />
                   </InputGroup>
                 </FormGroup>
@@ -226,7 +226,7 @@ class CouponFormComponent extends React.Component {
                     name="final_price"
                     disabled
                     label="precio final"
-                    parse={value => (!value ? null : Number(value))}
+                    parse={value => (!value ? null : Number.parseFloat(value))}
                   />
                 </FormGroup>
               </div>
