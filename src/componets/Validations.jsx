@@ -1,5 +1,7 @@
 export const validate = values => {
   const errors = {};
+  
+ 
   // nombre del cupon
   if (!values.name) {
     errors.name = 'Requerido';
@@ -19,12 +21,12 @@ export const validate = values => {
 
 
   // precio descuentos ya sea porcentaje o precio
-  if (!values.precio_descuento) {
-    errors.precio_descuento = 'Requerido';
-  } else if (isNaN(Number(values.precio_descuento))) {
-    errors.precio_descuento = 'Tiene que ser un numero';
-  } else if (Number(values.precio_descuento) < 0) {
-    errors.precio_descuento = 'Lo siento debe ser un descuento mayor a 0';
+  if (!values.discount_price) {
+    errors.discount_price = 'Requerido';
+  } else if (isNaN(Number(values.discount_price))) {
+    errors.discount_price = 'Tiene que ser un numero';
+  } else if (Number(values.discount_price) < 0) {
+    errors.discount_price = 'Lo siento debe ser un descuento mayor a 0';
   }
   // terminos de uso del cupon
   if (!values.terms_of_user) {
@@ -33,15 +35,23 @@ export const validate = values => {
     errors.terms_of_user = 'Descripcion muy grande ';
   }
   // fechas del cupon icnio y fin solo se requiren
-  if (!values.valid_sice) {
+ /*  if (!values.valid_sice) {
     errors.valid_sice = 'Requerido';
-  }
+  } */
   if (!values.valid_until) {
     errors.valid_until = 'Requerido';
   }
   if (values.valid_sice > values.valid_until) {
     errors.valid_until =
       'tienes que ser mayor la fecha de publicacion que la fecha terminacion del cupon';
+  }
+
+  if (values.published_since<values.valid_sice) {
+    errors.published_since='Revise la fecha de inicio del cupon'
+    
+  }
+  if (values.published_since > values.valid_until) {
+    errors.published_since='Revise la fecha fin del cupon'
   }
 
   // usos por usuario del cupon
@@ -70,9 +80,12 @@ export const validate = values => {
   if (values.discount_price >= values.list_price) {
     errors.discount_price =
       'Revise el precio del producto y el valor del descuento o no tendras ganancias';
-  } else if (values.discount_percentage === 100) {
+  }  if (values.discount_percentage === 100) {
     errors.discount_percentage =
       'Es un descuento en el que no ganaras nada si se utiliza el cupon ';
+  }
+  if(values.discount_percentage>100){
+    errors.discount_percentage='Revise el porcentaje de descuento'
   }
 
   return errors;
@@ -89,5 +102,6 @@ export const warn = values => {
 
   return warnings;
 };
+ /* sirve para checar que el descuento de porcentaje no sobrepare 100 %  */
 
-// setTimeout(warn=> warn, 1000)
+

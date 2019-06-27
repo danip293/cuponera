@@ -9,7 +9,7 @@ import {
   InputGroup,
   InputGroupAddon,
 } from 'reactstrap';
-import { validate, warn } from './Validations';
+import { validate, warn, normalizePhone} from './Validations';
 import { ImageComponent } from './ImageComponent';
 
 class CouponFormComponent extends React.Component {
@@ -17,6 +17,7 @@ class CouponFormComponent extends React.Component {
     super(props);
     this.calculateFinalPrice = this.calculateFinalPrice.bind(this);
     this.truncateDecimals = num => Number.parseFloat(Number.parseFloat(num).toFixed(1))
+    
   }
   calculateFinalPrice(event, newValue, previousValue, name) {
     const { dispatch } = this.props;
@@ -87,7 +88,7 @@ class CouponFormComponent extends React.Component {
             change(
               'cuponsForm',
               'discount_percentage',
-              this.truncateDecimals(finalDiscount_Percentage,)
+              this.truncateDecimals(finalDiscount_Percentage)
             ),
           );
         }
@@ -111,8 +112,9 @@ class CouponFormComponent extends React.Component {
       }
     }
   }
-
+  
   render() {
+
     const {
       handleSubmit,
       pristine,
@@ -123,12 +125,10 @@ class CouponFormComponent extends React.Component {
       discount_price,
       discount_percentage,
       dispatch,
+      
     } = this.props;
 
-    const greaterThan = otherField => (value, previousValue, allValues) =>
-      parseFloat(value) > parseFloat(allValues[otherField])
-        ? value
-        : previousValue;
+
     // console.log({ list_price, discount_price, discount_percentage, dispatch });
 
     return (
@@ -189,14 +189,26 @@ class CouponFormComponent extends React.Component {
                     <InputGroupAddon addonType="prepend">%</InputGroupAddon>
                     <Field
                       component={renderField}
-                      type="number"
+                      type="text"
                       name="discount_percentage"
                       disabled={discountPercentage !== 'porcentaje'}
                       onChange={this.calculateFinalPrice}
-                      parse={value => (!value ? null : Number.parseFloat(value))}
+                       parse={value => (!value ? null : Number.parseFloat(value))} 
+                      
                     />
                   </InputGroup>
                 </FormGroup>
+                {/* <FormGroup>
+                  <InputGroup>
+                    <InputGroupAddon addonType="prepend">%</InputGroupAddon>
+                    <Field
+                      component={renderField}
+                      type="text"
+                      name="aaa"
+                      normalize={normalizePhone}
+                    />
+                  </InputGroup>
+                </FormGroup> */}
                 {/* cupon de precio es decir monetario "se descuentan 100 pesos a cierto producto" */}
                 <FormGroup>
                   <Field
@@ -215,6 +227,7 @@ class CouponFormComponent extends React.Component {
                       disabled={discountPercentage !== 'dinero'}
                       onChange={this.calculateFinalPrice}
                       parse={value => (!value ? null : Number.parseFloat(value))}
+
                     />
                   </InputGroup>
                 </FormGroup>
@@ -254,7 +267,7 @@ class CouponFormComponent extends React.Component {
           <FormGroup>
             <Label>Valido desde</Label>
 
-            <Field name="valid_sice" component={renderField} type="date" />
+            <Field name="valid_since" component={renderField} type="date" onChange={this.Dates_PublishedSice} />
           </FormGroup>
 
           <FormGroup>
@@ -265,7 +278,7 @@ class CouponFormComponent extends React.Component {
           {/* publicar cupon en una fecha determinada*/}
           <FormGroup>
             <Label> Publicar cupon en esta fecha</Label>
-            <Field name="published_since" component={renderField} type="date" />
+            <Field name="published_since" component={renderField} type="date" onChange={this.Dates_PublishedSice} />
           </FormGroup>
 
           {/* total de cupones  */}

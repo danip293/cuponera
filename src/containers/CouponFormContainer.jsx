@@ -56,7 +56,14 @@ class CouponFormComponent extends Component {
     if (id) {
       return updateCoupon(id, values);
     }
+    console.log(values)
+     if(!values.valid_since){
+      console.log('validando el published_since');
+      
+      values.valid_since=values.published_since;
+    } 
     return AddCoupons({ ...values, total_uses: 0 });
+
   }
   render() {
     const {
@@ -68,6 +75,7 @@ class CouponFormComponent extends Component {
       list_price,
       discount_price,
       discount_percentage,
+    
     } = this.props;
 
     return (
@@ -82,6 +90,7 @@ class CouponFormComponent extends Component {
           list_price={list_price}
           discount_price={discount_price}
           discount_percentage={discount_percentage}
+        
         />
 
         {readOnly && <CustomerList />}
