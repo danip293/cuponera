@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col, Button, Collapse } from 'reactstrap';
+import { Container, Row, Col, Button, Collapse, Spinner } from 'reactstrap';
 import QRCode from 'qrcode.react';
 import { CouponItemComponent } from '../componets/CouponItemComponent';
 
@@ -20,6 +20,8 @@ export class CouponPublicDetailComponent extends React.Component {
       dispatch,
     } = this.props;
     if (id) {
+   
+    
       dispatch(retriveCoupon(id));
     }
   }
@@ -30,9 +32,16 @@ export class CouponPublicDetailComponent extends React.Component {
 
   render() {
     const { coupon } = this.props;
+   
+    if (!coupon) {
+      return(<Spinner color="secondary"></Spinner>)
+      
+    }else{
     return (
       <Container>
         <h1>Detalle publico del cupon</h1>
+       {console.log(this.props.match.params.id)
+       }
         <Row>
           <Col xs="4" sm="4" lg="4">
             <CouponItemComponent item={coupon} showNameDescription={false} />
@@ -62,12 +71,14 @@ export class CouponPublicDetailComponent extends React.Component {
               usar cupon
             </Button>
             <Collapse isOpen={this.state.collapse}>
-              <QRCode size="400" value="x" />
+              <QRCode size="400" value={this.props.match.params.id}/>
+              
             </Collapse>
           </Col>
         </Row>
       </Container>
     );
+    }
   }
 }
 

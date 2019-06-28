@@ -1,19 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-
 import './App.css';
 import logo from './logo.svg';
-
 import {
   CouponFormContainer,
   UpdateCouponContainer,
   DetailCouponContainer,
 } from './containers/CouponFormContainer';
-
 import CouponList from './containers/CouponList';
 import { CouponPublicListContainer } from './containers/CouponPublicListContainer';
-import { QrGeneratorContainer } from './containers/QrGeneratorContainer';
 import { QrReaderContainer } from './containers/QrReaderContainer';
 import { CouponPublicDetail } from './containers/CouponPublicDetail';
 
@@ -61,8 +57,7 @@ function App() {
           <Route path="/detail/:id" component={DetailCouponContainer} />
           <Route path="/update/:id" component={UpdateCouponContainer} />
           <Route path="/listadoPublico" component={CouponPublicListContainer} />
-          <Route path="/detallePublico/:id" component={CouponPublicDetail} />
-          <Route path="/generadordeQR" component={QrGeneratorContainer} />
+          <Route path="/detallePublico/:id" component={CouponPublicDetail} />          
         </div>
       </Router>
     </div>
